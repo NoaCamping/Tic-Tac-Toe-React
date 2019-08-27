@@ -1,0 +1,59 @@
+.App {
+  text-align: center;
+  border: 3px black solid;
+  margin: 5px;
+}
+#xo {
+  width: 1.25%;
+  margin-top: 1em;
+}
+
+#table{
+  border: 3px solid black;
+  background-color: rgb(255,255,153);
+  margin-left: 50%;
+  
+  font-size: medium;
+}
+#table th{
+  border: 3px solid black;
+  padding: 2em;
+}
+
+#radio-btns{
+  display: grid;
+  grid-template-columns: auto auto auto auto; 
+  padding: 0.5em;
+  
+}
+#sign-panel{
+  border: 0.25em solid black;
+  background-color: #D3D3D3;
+  padding: 0.5em;
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  transform: translate(-50%,-50%);
+ 
+}
+#x,#o{
+  width: 2em;
+  height: 2em;
+  
+}
+#buttons{
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  white-space: normal;
+  display: grid;
+  grid-template-columns: 15em;
+ 
+}
+#clear,#eraseLastMove,#showRecord,#saveGame,#loadGame{
+  margin: 1em;
+  font-size: medium;
+  padding: 0.5em;
+  background-color:rgb(240,240,240);
+  border-radius: 20em;
+  
+}
