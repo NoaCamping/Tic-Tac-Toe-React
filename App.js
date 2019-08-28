@@ -16,7 +16,10 @@ class App extends React.Component{
       compWon: false,
       numOfPlayers: 0,
       lastMove: [],
-      minimum_cells: 9
+      minimum_cells: 9,
+      savedGame: ["","","","","","","","",""],
+      player_saved_sign: "",
+      computer_saved_sign:""
     };
   }
 
@@ -179,8 +182,8 @@ class App extends React.Component{
    
   }
   
-  clearGame=()=>{
-    this.setState({
+  clearGame=async()=>{
+    await this.setState({
                 arr: ["","","","","","","","",""],
                 boardIsFull: false,
                 fullCells: 0,
@@ -188,7 +191,9 @@ class App extends React.Component{
                 compWon: false,
                 lastMove: [],
                 minimum_cells: 9
+      
         });
+  
   }
 
   eraseLastMove=async()=>{
@@ -208,6 +213,20 @@ class App extends React.Component{
 
   showRecord=()=>{
     alert("minimum number of full cells were: "+this.state.minimum_cells);
+  }
+
+  saveGame=async()=>{
+    let saved=["","","","","","","","",""];
+    for(let i=0; i<this.state.arr.length; i++)
+      saved[i]=this.state.arr[i];
+    await this.setState({savedGame: saved, player_saved_sign: this.state.player_sign, computer_saved_sign: this.state.computer_sign})
+    alert("Game was saved");
+  }
+
+  loadGame=async()=>{
+    this.clearGame();
+    await this.setState({arr: this.state.savedGame, player_sign: this.state.player_saved_sign, computer_sign: this.state.computer_saved_sign});
+    alert("Game was loaded");
   }
 
   render(){
@@ -255,8 +274,8 @@ class App extends React.Component{
                 <input type="button" onClick={this.clearGame} value="Clear/New Game" id="clear"/>
                 <input type="button" onClick={this.eraseLastMove} value="Erase Last Move" id="eraseLastMove"/>
                 <input type="button" onClick={this.showRecord} value="Show Record" id="showRecord"/>
-                <input type="button" onClick={this.clearGame} value="Save Game" id="saveGame"/>
-                <input type="button" onClick={this.clearGame} value="Load Game" id="loadGame"/>
+                <input type="button" onClick={this.saveGame} value="Save Game" id="saveGame"/>
+                <input type="button" onClick={this.loadGame} value="Load Game" id="loadGame"/>
             </div>
             
       </div>
