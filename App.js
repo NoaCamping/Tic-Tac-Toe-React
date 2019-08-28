@@ -16,7 +16,7 @@ class App extends React.Component{
       compWon: false,
       numOfPlayers: 0,
       lastMove: [],
-      minimum_cells: 0
+      minimum_cells: 9
     };
   }
 
@@ -34,44 +34,52 @@ class App extends React.Component{
   }
 
   insertValue=async(e)=>{
-    let temp=this.state.arr;
-    temp[e.target.id]=this.state.player_sign;
-    let moves=this.state.lastMove;
-    moves.push(e.target.id);
-    await this.setState({arr: temp, fullCells: this.state.fullCells+1, lastMove: moves});
+    //in case winning didn't occur
+    if(this.state.userWon==false && this.state.compWon==false)
+    {
+
+      let temp=this.state.arr;
+      //if player accidently pressed a location he was already in before
+      if(temp[e.target.id]==this.state.player_sign)
+          return;
+      temp[e.target.id]=this.state.player_sign;
+      let moves=this.state.lastMove;
+      moves.push(e.target.id);
+      await this.setState({arr: temp, fullCells: this.state.fullCells+1, lastMove: moves});
+      
+      //checking if player won
+      await this.checkWin(e);
+      if(this.state.userWon==true)
+            await this.check_minimum_cells(e);
+    }
     
-    //now computer turn
+
+    //now computer turn in case no winning occured until now
+    if(this.state.userWon==false && this.state.compWon==false)
+    {
+      await this.computerTurn();
+      await this.checkWin(e);
+      if(this.state.compWon==true)
+          await this.check_minimum_cells(e);
+    }
     
-    await this.computerTurn();
-    await this.checkWin(e);
-    //update number of steps
-    let numOfSteps=9;
+    
+       
+    
+  
+  }
+  check_minimum_cells=async(e)=>{
+
+    let numOfSteps=0;
+    
     for(var i=0; i<this.state.arr.length; i++)
-      if(this.state.arr[i]!=="")
-        numOfSteps++;
+      if(this.state.arr[i]=="x" || this.state.arr[i]=="o")
+            numOfSteps++;
     if(this.state.minimum_cells>numOfSteps)
     {
       await this.setState({minimum_cells: numOfSteps});
     }
-       
-    if(this.state.userWon==true)
-      {
-        alert("Player Won!");
-        
-      }
-       if(this.state.compWon==true)
-      {
-        alert("Computer Won!");
-        
-      }
-     if(this.state.userWon==false && this.state.compWon==false && this.state.boardIsFull==true)
-      {
-        alert("EVEN - game over");
-        
-      }
-  
   }
-  
   checkWin=(e)=>{
     let temp3=this.state.arr;
     let sign1=this.state.player_sign;
@@ -105,6 +113,23 @@ class App extends React.Component{
         this.setState({compWon: true});
     if(temp3[2]==sign2 && temp3[4]==sign2 && temp3[6]==sign2)
         this.setState({compWon: true});
+
+        //sending message to winner
+        if(this.state.userWon==true)
+      {
+        alert("Player Won!");
+        
+      }
+       if(this.state.compWon==true)
+      {
+        alert("Computer Won!");
+        
+      }
+     if(this.state.userWon==false && this.state.compWon==false && this.state.boardIsFull==true)
+      {
+        alert("EVEN - game over");
+        
+      }
     
   }
   
@@ -161,7 +186,8 @@ class App extends React.Component{
                 fullCells: 0,
                 userWon: false,
                 compWon: false,
-                lastMove: []
+                lastMove: [],
+                minimum_cells: 9
         });
   }
 
