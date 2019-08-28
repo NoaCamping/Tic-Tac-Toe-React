@@ -224,7 +224,7 @@ class App extends React.Component{
   }
 
   loadGame=async()=>{
-    this.clearGame();
+    await this.clearGame();
     await this.setState({arr: this.state.savedGame, player_sign: this.state.player_saved_sign, computer_sign: this.state.computer_saved_sign});
     alert("Game was loaded");
   }
