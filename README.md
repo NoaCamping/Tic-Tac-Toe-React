@@ -1,4 +1,5 @@
 # React - Tic Tac Toe game
 React based project 2019
 
-1 player plays against computer - finished.
+version 1-p-c
+1 Player plays against Computer - finished.
