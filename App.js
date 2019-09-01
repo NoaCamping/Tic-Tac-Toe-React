@@ -120,16 +120,19 @@ class App extends React.Component{
         //sending message to winner
         if(this.state.userWon==true)
       {
+        
         alert("Player Won!");
         
       }
        if(this.state.compWon==true)
       {
+        
         alert("Computer Won!");
         
       }
      if(this.state.userWon==false && this.state.compWon==false && this.state.boardIsFull==true)
       {
+        
         alert("EVEN - game over");
         
       }
@@ -216,16 +219,21 @@ class App extends React.Component{
   }
 
   saveGame=async()=>{
-    let saved=["","","","","","","","",""];
-    for(let i=0; i<this.state.arr.length; i++)
-      saved[i]=this.state.arr[i];
+    let copyarr=this.state.arr;
+    let saved=[];
+    for(let i=0; i<copyarr.length; i++)
+      saved.push(copyarr[i]);
     await this.setState({savedGame: saved, player_saved_sign: this.state.player_sign, computer_saved_sign: this.state.computer_sign})
     alert("Game was saved");
   }
 
   loadGame=async()=>{
     await this.clearGame();
-    await this.setState({arr: this.state.savedGame, player_sign: this.state.player_saved_sign, computer_sign: this.state.computer_saved_sign});
+    let copysaved=this.state.savedGame;
+    let result=[];
+    for(let i=0; i<copysaved.length; i++)
+    result.push(copysaved[i]);
+    await this.setState({arr: result, player_sign: this.state.player_saved_sign, computer_sign: this.state.computer_saved_sign});
     alert("Game was loaded");
   }
 
